@@ -4,7 +4,7 @@ defaults: &defaults
     - image: circleci/android:api-28-alpha
   environment:
     JVM_OPTS: -Xmx3200m
-  parallelism: 4
+  parallelism: 2
 
 version: 2
 jobs:
@@ -64,6 +64,10 @@ jobs:
       - run:
           name: Decode
           command: echo $KEYSTORE | base64 --decode > Keystore.jks
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - ./*
   "Build App":
     <<: *defaults
     steps:
