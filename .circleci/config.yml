@@ -57,10 +57,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/code
-      - run:
-          name: Create keystore folder
-          command: mkdir keystore && cd keystore
+          at: ~/code/keystore
       - run:
           name: Decode
           command: echo $KEYSTORE | base64 --decode > Keystore.jks
