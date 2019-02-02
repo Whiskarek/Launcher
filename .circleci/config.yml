@@ -60,17 +60,14 @@ jobs:
           at: ~/code/keystore
       - run:
           name: Decode
-          command: echo $KEYSTORE | base64 --decode > Keystore.jks
-      - run:
-          name: LS
-          command: ls
+          command: echo $KEYSTORE | base64 --decode > ~/code/keystore/Keystore.jks
       - run:
           name: Encode
           command: openssl base64 -A -in Keystore.jks
       - persist_to_workspace:
           root: ~/code
           paths:
-            - ./keystore/*
+            - ./*
   "Build App":
     <<: *defaults
     steps:
