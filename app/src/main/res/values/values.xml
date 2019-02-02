@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="civ_border_width">2dp</dimen>
+    <dimen name="civ_size">300dp</dimen>
+
+    <dimen name="text_size">32sp</dimen>
+
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+</resources>
