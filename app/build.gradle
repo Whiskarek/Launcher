@@ -21,7 +21,7 @@ android {
     signingConfigs {
         release {
             storeFile rootProject.file('keystore/Keystore.jks')
-            if (System.getenv("CI_BUILD") != null) {
+            if (System.getenv("CI") != null) {
                 storePassword System.getenv("STORE_PASSWORD")
                 keyPassword System.getenv("KEY_PASSWORD")
                 keyAlias System.getenv("KEY_ALIAS")
