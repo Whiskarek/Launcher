@@ -82,6 +82,7 @@ workflows:
   build:
     jobs:
       - "Make Dependencies"
+      - "Decode Keystore"
       - "Lint":
           requires:
             - "Make Dependencies"
