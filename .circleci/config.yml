@@ -67,7 +67,7 @@ jobs:
       - persist_to_workspace:
           root: ~/code
           paths:
-            - ./keystore
+            - ./keystore/Keystore.jks
   "Build App":
     <<: *defaults
     steps:
