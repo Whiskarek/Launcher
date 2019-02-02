@@ -10,7 +10,7 @@
 *.class
 
 # Keystore
-keystore/keystore.properties
+keystore/**
 
 # generated files
 release/**
