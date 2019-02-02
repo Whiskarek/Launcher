@@ -1,0 +1,96 @@
+defaults: &defaults
+  working_directory: ~/code
+  docker:
+    - image: circleci/android:api-28-alpha
+  environment:
+    JVM_OPTS: -Xmx3200m
+  parallelism: 4
+
+version: 2
+jobs:
+  "Make Dependencies":
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Init Gradle
+          command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - ./*
+  "Unit Tests":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - store_test_results:
+          path: app/build/test-results
+  "Lint":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run Lint
+          command: ./gradlew lint
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+  "Decode Keystore":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - run:
+          name: Create keystore folder
+          command: mkdir keystore && cd keystore
+      - run:
+          name: Decode
+          command: echo $KEYSTORE | base64 --decode > Keystore.jks
+  "Build App":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Build
+          command: ./gradlew clean assembleRelease
+      - store_artifacts:
+          path: app/build/outputs/apk/
+          destination: apks
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "Make Dependencies"
+      - "Lint":
+          requires:
+            - "Make Dependencies"
+      - "Unit Tests":
+          requires:
+            - "Make Dependencies"
+      - "Build App":
+          requires:
+            - "Make Dependencies"
+            - "Lint"
+            - "Unit Tests"
+            - "Decode Keystore"
