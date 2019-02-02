@@ -67,12 +67,15 @@ jobs:
       - persist_to_workspace:
           root: ~/code
           paths:
-            - ./*
+            - ./keystore
   "Build App":
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/code
+      - run:
+          name: LS
+          command: ls && ls keystore/
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
