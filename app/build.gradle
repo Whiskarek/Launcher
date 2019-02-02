@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -14,12 +18,28 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile rootProject.file('keystore/Keystore.jks')
+            if (System.getenv("CI_BUILD") != null) {
+                storePassword System.getenv("STORE_PASSWORD")
+                keyPassword System.getenv("KEY_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+            } else {
+                storePassword keystoreProperties['storePassword']
+                keyPassword keystoreProperties['keyPassword']
+                keyAlias = keystoreProperties['keyAlias']
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
+
 }
 
 dependencies {
