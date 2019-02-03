@@ -73,7 +73,7 @@ task deployAppCenter() {
     group = 'publishing'
     dependsOn 'assembleRelease'
 
-    if (System.getenv("CIRCLECI") == null || deploy != true)
+    if (System.getenv("CIRCLECI") == null)
         return
 
     def appCenterToken = System.getenv("APP_CENTER_TOKEN")
