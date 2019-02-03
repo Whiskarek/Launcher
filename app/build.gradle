@@ -38,7 +38,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            ext.betaDistributionGroupAliases = 'new-launcher'
+            ext.betaDistributionGroupAliases = 'test'
             def path = 'release-notes/' + defaultConfig.versionName + '.txt'
             ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
         }
