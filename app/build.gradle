@@ -164,7 +164,7 @@ task deployAppCenter() {
             accumulate("notify_testers", true).
             accumulate("mandatory_update", branch == "master")
 
-    releaseInfo = releaseInfo.toString().replaceAll("\\\\n", "").replace("\\", "").replace('\"', '\\\"').replace(':', ': ')
+    releaseInfo = releaseInfo.toString().replaceAll("\\\\n", "").replace("\\", "").replace(':', ': ')
 
     println releaseInfo
 
