@@ -81,6 +81,11 @@ task deployAppCenter() {
     def appCenterAppName = System.getenv("APP_CENTER_APP_NAME")
     def appCenterUrl = "https://api.appcenter.ms/v0.1/apps/${appCenterOwnerName}/${appCenterAppName}"
 
+    println appCenterToken
+    println appCenterOwnerName
+    println appCenterAppName
+    println appCenterUrl
+
     def postReleaseUploadQuery = "curl -X POST " +
             "--header 'Content-Type: application/json' " +
             "--header 'Accept: application/json' " +
@@ -93,9 +98,17 @@ task deployAppCenter() {
             ].execute()
     postReleaseUploadResponse.waitFor()
 
-    postReleaseUploadResponse = new JSONObject(postReleaseUploadResponse.text)
+    println postReleaseUploadResponse.err.text
+
+    postReleaseUploadResponse = postReleaseUploadResponse.text
+    println postReleaseUploadResponse
+
+    postReleaseUploadResponse = new JSONObject(postReleaseUploadResponse)
     def appCenterUploadId = postReleaseUploadResponse.get("upload_id")
     def appCenterUploadUrl = postReleaseUploadResponse.get("upload_url")
+
+    println appCenterUploadId
+    println appCenterUploadUrl
 
     def uploadApkFileQuery = "curl " +
             "${appCenterUploadUrl} " +
@@ -106,6 +119,9 @@ task deployAppCenter() {
              uploadApkFileQuery
             ].execute()
     uploadApkFileResponse.waitFor()
+
+    println uploadApkFileResponse.err.text
+    println uploadApkFileResponse.text
 
     def updateUploadResourceStatusQuery = "curl -X PATCH " +
             "'${appCenterUrl}/release_uploads/${appCenterUploadId}' " +
@@ -120,12 +136,21 @@ task deployAppCenter() {
             ].execute()
     updateUploadResourceStatusResponse.waitFor()
 
-    updateUploadResourceStatusResponse = new JSONObject(updateUploadResourceStatusResponse.text)
+    println updateUploadResourceStatusResponse.err.text
+    updateUploadResourceStatusResponse = updateUploadResourceStatusResponse.text
+
+    println updateUploadResourceStatusResponse
+
+    updateUploadResourceStatusResponse = new JSONObject(updateUploadResourceStatusResponse)
     def appCenterReleaseId = updateUploadResourceStatusResponse.get("release_id")
 
     def branch = System.getenv("CIRCLE_BRANCH")
     def commitHash = System.getenv("CIRCLE_SHA1")
     def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"].execute().text
+
+    println branch
+    println commitHash
+    println commitMessage
 
     def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.txt"
     def releaseInfo = new JSONObject()
@@ -140,6 +165,8 @@ task deployAppCenter() {
             accumulate("mandatory_update", branch == "master")
 
     releaseInfo = releaseInfo.toString().replaceAll("\\\\n", "").replace("\\", "").replace('\"', '\\\"').replace(':', ': ')
+
+    println releaseInfo
 
     def distributeToGroupQuery = "curl -X PATCH " +
             "--header 'Content-Type: application/json' " +
