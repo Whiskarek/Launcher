@@ -51,5 +51,4 @@
         app:layout_constraintEnd_toEndOf="@+id/civ_photo"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
