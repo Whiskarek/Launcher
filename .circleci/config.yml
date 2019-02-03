@@ -111,7 +111,10 @@ workflows:
     jobs:
       - "Make Dependencies"
       - "Decode Keystore"
-      - "Import Fabric Properties"
+      - "Import Fabric Properties":
+          filters:
+            branches:
+              only: master
       - "Lint":
           requires:
             - "Make Dependencies"
@@ -128,3 +131,6 @@ workflows:
           requires:
             - "Build App"
             - "Import Fabric Properties"
+          filters:
+            branches:
+              only: master
