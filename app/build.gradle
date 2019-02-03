@@ -128,7 +128,7 @@ task deployAppCenter() {
             "-H 'X-API-Token: ${appCenterToken}' " +
             "-H 'accept: application/json' " +
             "-H 'Content-Type: application/json' " +
-            "-d '{ \\\"status\\\": \\\"committed\\\"}'"
+            "-d '{ \"status\": \"committed\"}'"
     def updateUploadResourceStatusResponse =
             ['bash',
              '-c',
