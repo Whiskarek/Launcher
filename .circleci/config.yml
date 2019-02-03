@@ -65,14 +65,23 @@ jobs:
           root: ~/code
           paths:
             - keystore/*
+  "Import Fabric Properties":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code/app
+      - run:
+          name: Import Properties
+          command: echo -e "apiSecret=${FABRIC_API_SECRET}\napiKey=${FABRIC_API_KEY}" >> ~/code/app/fabric.properties
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - app/fabric.properties
   "Build App":
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/code
-      - run:
-          name: LS
-          command: ls && ls keystore/
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -81,12 +90,28 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks
+      - persist_to_workspace:
+          root: ~/code
+          paths:
+            - ./*
+  "Deploy Fabric":
+    <<: *defaults
+    working_directory: ~/code
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - deploy:
+          name: Deploy Fabric
+          command: ./gradlew crashlyticsUploadDistributionRelease
 workflows:
   version: 2
   build:
     jobs:
       - "Make Dependencies"
       - "Decode Keystore"
+      - "Import Fabric Properties"
       - "Lint":
           requires:
             - "Make Dependencies"
@@ -99,3 +124,7 @@ workflows:
             - "Lint"
             - "Unit Tests"
             - "Decode Keystore"
+      - "Deploy Fabric":
+          requires:
+            - "Build App"
+            - "Import Fabric Properties"
