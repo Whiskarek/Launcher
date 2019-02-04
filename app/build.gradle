@@ -8,6 +8,12 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'io.fabric'
 
+def keystoreProperties = new Properties()
+if (System.getenv("CI") == null) {
+    def keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -17,18 +23,29 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def fabricKey
+        def appCenterKey
+
+        if (System.getenv("CI") != null) {
+            appCenterKey = System.getenv("APPCENTER_KEY")
+            fabricKey = System.getenv("FABRIC_API_KEY")
+        } else {
+            appCenterKey = keystoreProperties['appcenterKey']
+            fabricKey = keystoreProperties["fabricKey"]
+        }
+
+        manifestPlaceholders = [fabricKey:fabricKey]
+        buildConfigField("String", "APPCENTER_KEY", "\"$appCenterKey\"")
     }
     signingConfigs {
         release {
             storeFile rootProject.file('keystore/Keystore.jks')
-            if (System.getenv("CIRCLECI") != null) {
+            if (System.getenv("CI") != null) {
                 storePassword System.getenv("STORE_PASSWORD")
                 keyPassword System.getenv("KEY_PASSWORD")
                 keyAlias System.getenv("KEY_ALIAS")
             } else {
-                def keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
-                def keystoreProperties = new Properties()
-                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
                 storePassword keystoreProperties['storePassword']
                 keyPassword keystoreProperties['keyPassword']
                 keyAlias keystoreProperties['keyAlias']
