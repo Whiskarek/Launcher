@@ -147,7 +147,7 @@ static final String getDistributionConfig(String releaseNotesPath) {
     def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"]
             .execute().text.replaceAll("\\n", "")
     def releaseNotes = new File(releaseNotesPath).text
-    releaseNotes = "# Branch: ${branch}\n${releaseNotes}"
+    releaseNotes = "### Branch: ${branch}\n${releaseNotes}"
     def releaseInfo = new JSONObject()
     releaseInfo.accumulate("destination_name", "Collaborators").
             accumulate("release_notes", releaseNotes).
