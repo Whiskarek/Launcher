@@ -80,17 +80,30 @@ task deployAppCenter() {
     def appCenterOwnerName = System.getenv("APP_CENTER_OWNER_NAME")
     def appCenterAppName = System.getenv("APP_CENTER_APP_NAME")
     def appCenterUrl = "https://api.appcenter.ms/v0.1/apps/${appCenterOwnerName}/${appCenterAppName}"
+    def postReleaseResponse = appCenterPostRelease("${appCenterUrl}/release_uploads", appCenterToken)
+    postReleaseResponse = new JSONObject(postReleaseResponse)
+    def appCenterUploadId = postReleaseResponse.get("upload_id")
+    def appCenterUploadUrl = postReleaseResponse.get("upload_url")
 
-    println appCenterToken
-    println appCenterOwnerName
-    println appCenterAppName
-    println appCenterUrl
+    appCenterUploadApkFile(appCenterUploadUrl)
 
+    def updateUploadStatusResponse = appCenterUpdateUploadStatus("${appCenterUrl}/release_uploads/${appCenterUploadId}", appCenterToken)
+
+    updateUploadStatusResponse = new JSONObject(updateUploadStatusResponse)
+    def appCenterReleaseId = updateUploadStatusResponse.get("release_id")
+
+    def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.txt"
+    String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
+
+    appCenterDistributeToGroup(releaseInfo, "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
+}
+
+static final String appCenterPostRelease(String appCenterReleaseUrl, String appCenterToken) {
     def postReleaseUploadQuery = "curl -X POST " +
             "--header 'Content-Type: application/json' " +
             "--header 'Accept: application/json' " +
             "--header 'X-API-Token: ${appCenterToken}' " +
-            "'${appCenterUrl}/release_uploads'"
+            "'${appCenterReleaseUrl}'"
     def postReleaseUploadResponse =
             ['bash',
              '-c',
@@ -98,18 +111,10 @@ task deployAppCenter() {
             ].execute()
     postReleaseUploadResponse.waitFor()
 
-    println postReleaseUploadResponse.err.text
+    return postReleaseUploadResponse.text
+}
 
-    postReleaseUploadResponse = postReleaseUploadResponse.text
-    println postReleaseUploadResponse
-
-    postReleaseUploadResponse = new JSONObject(postReleaseUploadResponse)
-    def appCenterUploadId = postReleaseUploadResponse.get("upload_id")
-    def appCenterUploadUrl = postReleaseUploadResponse.get("upload_url")
-
-    println appCenterUploadId
-    println appCenterUploadUrl
-
+static final void appCenterUploadApkFile(String appCenterUploadUrl) {
     def uploadApkFileQuery = "curl " +
             "${appCenterUploadUrl} " +
             "-F \"ipa=@app/build/outputs/apk/release/app-release.apk\""
@@ -119,43 +124,31 @@ task deployAppCenter() {
              uploadApkFileQuery
             ].execute()
     uploadApkFileResponse.waitFor()
+}
 
-    println uploadApkFileResponse.err.text
-    println uploadApkFileResponse.text
-
-    def updateUploadResourceStatusQuery = "curl -X PATCH " +
-            "'${appCenterUrl}/release_uploads/${appCenterUploadId}' " +
+static final String appCenterUpdateUploadStatus(String appCenterUploadUrl, String appCenterToken) {
+    def updateUploadStatusQuery = "curl -X PATCH " +
+            "'${appCenterUploadUrl}' " +
             "-H 'X-API-Token: ${appCenterToken}' " +
             "-H 'accept: application/json' " +
             "-H 'Content-Type: application/json' " +
             "-d '{ \"status\": \"committed\"}'"
-    def updateUploadResourceStatusResponse =
+    def updateUploadStatusResponse =
             ['bash',
              '-c',
-             updateUploadResourceStatusQuery
+             updateUploadStatusQuery
             ].execute()
-    updateUploadResourceStatusResponse.waitFor()
+    updateUploadStatusResponse.waitFor()
+    return updateUploadStatusResponse.text
+}
 
-    println updateUploadResourceStatusResponse.err.text
-    updateUploadResourceStatusResponse = updateUploadResourceStatusResponse.text
-
-    println updateUploadResourceStatusResponse
-
-    updateUploadResourceStatusResponse = new JSONObject(updateUploadResourceStatusResponse)
-    def appCenterReleaseId = updateUploadResourceStatusResponse.get("release_id")
-
+static final String getDistributionConfig(String releaseNotesPath) {
     def branch = System.getenv("CIRCLE_BRANCH")
     def commitHash = System.getenv("CIRCLE_SHA1")
     def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"].execute().text
-
-    println branch
-    println commitHash
-    println commitMessage
-
-    def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.txt"
     def releaseInfo = new JSONObject()
     releaseInfo.accumulate("destination_name", "Collaborators").
-            accumulate("release_notes", new File(rootProject.file(releaseNotesPath).getPath()).text).
+            accumulate("release_notes", new File(releaseNotesPath).text).
             accumulate("build",
                     new JSONObject().
                             accumulate("branch", branch).
@@ -163,22 +156,21 @@ task deployAppCenter() {
                             accumulate("commit_message", commitMessage)).
             accumulate("notify_testers", true).
             accumulate("mandatory_update", branch == "master")
+    return releaseInfo.toString().replaceAll("\\\\n", "")
+}
 
-    releaseInfo = releaseInfo.toString().replaceAll("\\\\n", "").replace("\\", "").replace(':', ': ')
-
-    println releaseInfo
-
+static final String appCenterDistributeToGroup(String releaseInfo, String appCenterReleaseUrl, String appCenterToken) {
     def distributeToGroupQuery = "curl -X PATCH " +
             "--header 'Content-Type: application/json' " +
             "--header 'Accept: application/json' " +
             "--header 'X-API-Token: ${appCenterToken}' " +
             "-d '${releaseInfo}' " +
-            "'${appCenterUrl}/releases/${appCenterReleaseId}'"
+            "'${appCenterReleaseUrl}'"
     def distributeToGroupResponse =
             ['bash',
              '-c',
              distributeToGroupQuery
             ].execute()
     distributeToGroupResponse.waitFor()
-    println distributeToGroupResponse.text
+    return  distributeToGroupResponse.text
 }
