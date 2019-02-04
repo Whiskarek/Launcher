@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics())
-        AppCenter.start(application, "415c2e43-fe28-4d27-8abd-25be79341c57",
+        AppCenter.start(application, BuildConfig.APPCENTER_KEY,
                 Analytics::class.java, Crashes::class.java)
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.github).setOnClickListener {
