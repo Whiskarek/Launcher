@@ -146,7 +146,7 @@ static final String getDistributionConfig(String releaseNotesPath) {
     def branch = System.getenv("CIRCLE_BRANCH")
     def commitHash = System.getenv("CIRCLE_SHA1")
     def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"]
-            .execute().text.replaceAll("\\\\n", "")
+            .execute().text.replaceAll("\\n", "")
     def releaseNotes = new File(releaseNotesPath).text
     releaseNotes = "Breanch: ${branch}\\\\n${releaseNotes}"
     def releaseInfo = new JSONObject()
