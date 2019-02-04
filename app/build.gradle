@@ -145,10 +145,13 @@ static final String appCenterUpdateUploadStatus(String appCenterUploadUrl, Strin
 static final String getDistributionConfig(String releaseNotesPath) {
     def branch = System.getenv("CIRCLE_BRANCH")
     def commitHash = System.getenv("CIRCLE_SHA1")
-    def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"].execute().text
+    def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"]
+            .execute().text.replaceAll("\\\\n", "")
+    def releaseNotes = new File(releaseNotesPath).text
+    releaseNotes = "Breanch: ${branch}\\\n${releaseNotes}"
     def releaseInfo = new JSONObject()
     releaseInfo.accumulate("destination_name", "Collaborators").
-            accumulate("release_notes", new File(releaseNotesPath).text).
+            accumulate("release_notes", releaseNotes).
             accumulate("build",
                     new JSONObject().
                             accumulate("branch", branch).
@@ -156,7 +159,7 @@ static final String getDistributionConfig(String releaseNotesPath) {
                             accumulate("commit_message", commitMessage)).
             accumulate("notify_testers", true).
             accumulate("mandatory_update", branch == "master")
-    return releaseInfo.toString().replaceAll("\\\\n", "")
+    return releaseInfo.toString()
 }
 
 static final String appCenterDistributeToGroup(String releaseInfo, String appCenterReleaseUrl, String appCenterToken) {
