@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appcenter_distribute_version_xxx_available">Version %1$s available!</string>
+    <string name="appcenter_distribute_update_dialog_download">Download</string>
+    <string name="appcenter_distribute_update_dialog_postpone">Ask me in a day</string>
+</resources>
