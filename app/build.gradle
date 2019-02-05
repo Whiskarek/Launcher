@@ -101,41 +101,22 @@ task deployAppCenter() {
     def appCenterOwnerName = System.getenv("APP_CENTER_OWNER_NAME")
     def appCenterAppName = System.getenv("APP_CENTER_APP_NAME")
     def appCenterUrl = "https://api.appcenter.ms/v0.1/apps/${appCenterOwnerName}/${appCenterAppName}"
-
-    println appCenterToken
-    println appCenterOwnerName
-    println appCenterAppName
-    println appCenterUrl
-
     def postReleaseResponse = appCenterPostRelease("${appCenterUrl}/release_uploads", appCenterToken)
-
-    println postReleaseResponse
-
     postReleaseResponse = new JSONObject(postReleaseResponse)
     def appCenterUploadId = postReleaseResponse.get("upload_id")
     def appCenterUploadUrl = postReleaseResponse.get("upload_url")
-
-    println appCenterUploadId
-    println appCenterUploadUrl
-
     appCenterUploadApkFile(appCenterUploadUrl)
-
     def updateUploadStatusResponse = appCenterUpdateUploadStatus("${appCenterUrl}/release_uploads/${appCenterUploadId}", appCenterToken)
-
-    println updateUploadStatusResponse
-
     updateUploadStatusResponse = new JSONObject(updateUploadStatusResponse)
     def appCenterReleaseId = updateUploadStatusResponse.get("release_id")
-
-    println appCenterReleaseId
-
     def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.md"
     String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
 
-    println releaseInfo
+    delete rootProject.file(releaseNotesPath).getPath()
+    new File(rootProject.file(releaseNotesPath).getPath()).text = releaseInfo
 
     def appCenterDistributeToGroupResponse =
-            appCenterDistributeToGroup(releaseInfo, "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
+            appCenterDistributeToGroup(rootProject.file(releaseNotesPath).getPath(), "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
 
     doLast {
         println appCenterDistributeToGroupResponse
@@ -209,12 +190,12 @@ static final String getDistributionConfig(String releaseNotesPath) {
     return releaseInfo.toString()
 }
 
-static final String appCenterDistributeToGroup(String releaseInfo, String appCenterReleaseUrl, String appCenterToken) {
+static final String appCenterDistributeToGroup(String releaseInfoFile, String appCenterReleaseUrl, String appCenterToken) {
     def distributeToGroupQuery = "curl -X PATCH " +
             "--header 'Content-Type: application/json' " +
             "--header 'Accept: application/json' " +
             "--header 'X-API-Token: ${appCenterToken}' " +
-            "-d '${releaseInfo}' " +
+            "-d @${releaseInfoFile} " +
             "'${appCenterReleaseUrl}'"
     def distributeToGroupResponse =
             ['bash',
