@@ -20,8 +20,8 @@ android {
         applicationId "by.whiskarek.yandexlauncher"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.1"
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         def fabricKey
@@ -58,7 +58,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             ext.betaDistributionGroupAliases = 'andrew-shkrob-1'
-            def path = "release-notes/${defaultConfig.versionName}.txt"
+            def path = "release-notes/${defaultConfig.versionName}.md"
             ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
         }
     }
@@ -109,7 +109,7 @@ task deployAppCenter() {
     updateUploadStatusResponse = new JSONObject(updateUploadStatusResponse)
     def appCenterReleaseId = updateUploadStatusResponse.get("release_id")
 
-    def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.txt"
+    def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.md"
     String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
 
     appCenterDistributeToGroup(releaseInfo, "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
