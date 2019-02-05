@@ -148,3 +148,8 @@ workflows:
       - "Deploy AppCenter":
           requires:
             - "Build App"
+          filters:
+            branches:
+              only:
+                - master
+                - dev
