@@ -9,6 +9,9 @@
 # Java class files
 *.class
 
+# Keystore
+keystore/**
+
 # generated files
 release/**
 bin/**

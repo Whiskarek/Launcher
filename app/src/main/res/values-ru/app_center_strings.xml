@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appcenter_distribute_version_xxx_available">Версия %1$s доступна!</string>
+    <string name="appcenter_distribute_update_dialog_download">Скачать</string>
+    <string name="appcenter_distribute_update_dialog_postpone">Напомнить позже</string>
+</resources>
