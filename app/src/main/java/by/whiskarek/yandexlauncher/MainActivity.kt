@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics())
+        Distribute.setEnabled(true)
         Distribute.setListener(AppCenterDistributeListener())
         AppCenter.start(application, BuildConfig.APPCENTER_KEY,
                 Analytics::class.java, Crashes::class.java, Distribute::class.java)

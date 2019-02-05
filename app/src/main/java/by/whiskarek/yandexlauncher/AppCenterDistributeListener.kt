@@ -28,9 +28,9 @@ class AppCenterDistributeListener : DistributeListener {
                 _, _ -> Distribute.notifyUpdateAction(UpdateAction.POSTPONE)
             }
         }
-        dialogBuilder.setCancelable(false)
+        dialogBuilder.setCancelable(!releaseDetails.isMandatoryUpdate)
         dialogBuilder.setOnCancelListener {
-            it.cancel()
+            Distribute.notifyUpdateAction(UpdateAction.POSTPONE)
         }
         dialogBuilder.create().show()
 
