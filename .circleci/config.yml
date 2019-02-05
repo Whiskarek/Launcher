@@ -142,7 +142,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - deploy:
           name: Deploy AppCenter
-          command: ./gradlew cleanDeployAppCenter -Pdeploy=true deployAppCenter
+          command: ./gradlew -Pdeploy=true deployAppCenter -i
 workflows:
   version: 2
   build:
