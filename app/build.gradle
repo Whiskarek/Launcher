@@ -90,6 +90,10 @@ task deployAppCenter() {
     description = 'Deploying application to AppCenter'
     group = 'publishing'
 
+    doFirst {
+        println "Deploying to AppCenter"
+    }
+
     if (System.getenv("CIRCLECI") == null || !project.hasProperty("deploy"))
         return
 
@@ -113,6 +117,10 @@ task deployAppCenter() {
     String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
 
     appCenterDistributeToGroup(releaseInfo, "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
+
+    doLast {
+        println "Successfully deployed"
+    }
 }
 
 static final String appCenterPostRelease(String appCenterReleaseUrl, String appCenterToken) {

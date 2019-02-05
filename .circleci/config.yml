@@ -138,6 +138,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - deploy:
           name: Deploy AppCenter
           command: ./gradlew cleanDeployAppCenter -Pdeploy=true deployAppCenter
