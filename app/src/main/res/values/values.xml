@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="civ_border_width">2dp</dimen>
-    <dimen name="civ_size">300dp</dimen>
+    <dimen name="civ_size">200dp</dimen>
 
     <dimen name="margin_small">8dp</dimen>
 </resources>
