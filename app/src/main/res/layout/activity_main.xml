@@ -7,14 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/civ_photo"
         android:layout_width="@dimen/civ_size"
         android:layout_height="@dimen/civ_size"
         android:src="@drawable/photo"
         android:layout_margin="@dimen/margin_small"
-        app:civ_border_color="@color/colorAccent"
-        app:civ_border_width="@dimen/civ_border_width"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
