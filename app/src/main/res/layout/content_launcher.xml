@@ -8,4 +8,11 @@
     tools:context=".LauncherActivity"
     tools:showIn="@layout/app_bar_launcher">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/app_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/app_list_padding"
+        android:clipToPadding="false"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

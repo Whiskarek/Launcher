@@ -1,8 +1,6 @@
 package by.whiskarek.yandexlauncher
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -11,7 +9,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class LauncherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,11 +17,6 @@ class LauncherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
@@ -36,7 +29,7 @@ class LauncherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navView.setNavigationItemSelectedListener(this)
+        navView.setNavigationItemSelectedListener(this::onNavigationItemSelected)
     }
 
     override fun onBackPressed() {
@@ -46,7 +39,7 @@ class LauncherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    private fun onNavigationItemSelected(item: MenuItem): Boolean {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
