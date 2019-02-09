@@ -16,10 +16,6 @@ task deployAppCenter() {
 
     doFirst {
         println "Deploying to AppCenter"
-        def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.md"
-        String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
-        println releaseNotesPath
-        println releaseInfo
     }
 
     if (System.getenv("CIRCLECI") == null || !project.hasProperty("deploy"))
@@ -43,8 +39,8 @@ task deployAppCenter() {
     delete rootProject.file(releaseNotesPath).getPath()
     new File(rootProject.file(releaseNotesPath).getPath()).text = releaseInfo
 
-//    def appCenterDistributeToGroupResponse =
-//            appCenterDistributeToGroup(rootProject.file(releaseNotesPath).getPath(), "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
+    def appCenterDistributeToGroupResponse =
+            appCenterDistributeToGroup(rootProject.file(releaseNotesPath).getPath(), "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
 
     doLast {
         println appCenterDistributeToGroupResponse
