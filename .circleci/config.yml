@@ -28,18 +28,6 @@ jobs:
           root: ~/code
           paths:
             - ./*
-  "Download KtLint":
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/code
-      - run:
-          name: Download ktlint
-          command: curl -sSLO https://github.com/shyiko/ktlint/releases/download/0.29.0/ktlint && chmod a+x ktlint
-      - persist_to_workspace:
-          root: ~/code
-          paths:
-            - ./ktlint
   "Unit Tests":
     <<: *defaults
     steps:
@@ -71,12 +59,19 @@ jobs:
       - attach_workspace:
           at: ~/code
       - run:
-          name: Create report dirs
-          command: mkdir -p app/build/reports
-      - run:
           name: Run Kotlin Linter
-          command: |
-            ./ktlint --relative --android --reporter=plain "app/**/*.kt" 2>&1 | tee app/build/reports/ktlint-results.txt || echo Finished
+          command: ./gradlew ktlint
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+  "DeteKt":
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/code
+      - run:
+          name: Run DeteKt
+          command: ./gradlew detekt
       - store_artifacts:
           path: app/build/reports
           destination: reports
@@ -149,7 +144,6 @@ workflows:
     jobs:
       - "Make Dependencies"
       - "Decode Keystore"
-      - "Download KtLint"
       - "Import Fabric Properties":
           filters:
             branches:
@@ -160,7 +154,9 @@ workflows:
       - "KtLint":
           requires:
             - "Make Dependencies"
-            - "Download KtLint"
+      - "DeteKt":
+          requires:
+            - "Make Dependencies"
       - "Unit Tests":
           requires:
             - "Make Dependencies"
@@ -169,6 +165,7 @@ workflows:
             - "Make Dependencies"
             - "Lint"
             - "KtLint"
+            - "DeteKt"
             - "Unit Tests"
             - "Decode Keystore"
       - "Deploy Fabric":
