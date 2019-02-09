@@ -105,7 +105,7 @@ static final String getDistributionConfig(String releaseNotesPath) {
             .execute().text.replaceAll("\\n", "")
     def releaseNotesFile = new File(releaseNotesPath)
     def releaseNotes
-    if (releaseNotesFile != null) {
+    if (releaseNotesFile.exists()) {
         releaseNotes = releaseNotesFile.text
     } else {
         releaseNotes = ""
