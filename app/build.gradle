@@ -4,11 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply from: 'DeployAppCenter.gradle'
 
-def keystoreProperties = new Properties()
-if (System.getenv("CI") == null) {
-    def keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
+import myapp.gradle.PropertiesImporter
+
+def propertiesImporter =
+        new PropertiesImporter(rootProject.file("keystore/keystore.properties").path, rootProject)
 
 android {
     compileSdkVersion 28
@@ -20,31 +19,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        def fabricKey
-        def appCenterKey
-
-        if (System.getenv("CI") != null) {
-            appCenterKey = System.getenv("APPCENTER_KEY")
-            fabricKey = System.getenv("FABRIC_API_KEY")
-        } else {
-            appCenterKey = keystoreProperties['appcenterKey']
-            fabricKey = keystoreProperties["fabricKey"]
-        }
-
+        def fabricKey = propertiesImporter.getFabricKey()
+        def appCenterKey = propertiesImporter.getAppCenterKey()
         manifestPlaceholders = [fabricKey:fabricKey]
         buildConfigField("String", "APPCENTER_KEY", "\"$appCenterKey\"")
     }
-    signingConfigs {
-        release {
-            storeFile rootProject.file('keystore/Keystore.jks')
-            if (System.getenv("CI") != null) {
-                storePassword System.getenv("STORE_PASSWORD")
-                keyPassword System.getenv("KEY_PASSWORD")
-                keyAlias System.getenv("KEY_ALIAS")
-            } else {
-                storePassword keystoreProperties['storePassword']
-                keyPassword keystoreProperties['keyPassword']
-                keyAlias keystoreProperties['keyAlias']
+    if (propertiesImporter.canMakeSigning()) {
+        signingConfigs {
+            release {
+                storeFile new File(propertiesImporter.getKeystoreFilePath())
+                storePassword propertiesImporter.getKeystorePassword()
+                keyPassword propertiesImporter.getKeyPassword()
+                keyAlias propertiesImporter.getKeyAlias()
+                v1SigningEnabled true
+                v2SigningEnabled true
             }
         }
     }
@@ -52,10 +40,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            ext.betaDistributionGroupAliases = 'andrew-shkrob-1'
-            def path = "release-notes/${defaultConfig.versionName}.md"
-            ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
+            if (propertiesImporter.canMakeSigning()) {
+                signingConfig signingConfigs.release
+                ext.betaDistributionGroupAliases = 'andrew-shkrob-1'
+                def path = "release-notes/${defaultConfig.versionName}.md"
+                ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
+            }
         }
     }
 }
