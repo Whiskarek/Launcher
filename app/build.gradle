@@ -1,8 +1,12 @@
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC12"
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply from: 'DeployAppCenter.gradle'
+apply from: 'StaticAnalysis.gradle'
 
 import myapp.gradle.PropertiesImporter
 
