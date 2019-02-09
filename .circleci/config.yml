@@ -172,11 +172,6 @@ workflows:
           type: approval
           requires:
             - "Build App"
-          filters:
-            branches:
-              only:
-                - master
-                - dev
       - "Deploy Fabric":
           requires:
             - "Build App"
@@ -189,8 +184,3 @@ workflows:
           requires:
             - "Build App"
             - "Deploy Hold"
-          filters:
-            branches:
-              only:
-                - master
-                - dev
