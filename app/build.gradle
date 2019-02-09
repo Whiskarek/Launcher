@@ -1,18 +1,13 @@
-import org.json.JSONObject
-
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'io.fabric'
+apply from: 'DeployAppCenter.gradle'
 
-def keystoreProperties = new Properties()
-if (System.getenv("CI") == null) {
-    def keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
+import myapp.gradle.PropertiesImporter
+
+def propertiesImporter =
+        new PropertiesImporter(rootProject.file("keystore/keystore.properties").path, rootProject)
 
 android {
     compileSdkVersion 28
@@ -24,31 +19,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        def fabricKey
-        def appCenterKey
-
-        if (System.getenv("CI") != null) {
-            appCenterKey = System.getenv("APPCENTER_KEY")
-            fabricKey = System.getenv("FABRIC_API_KEY")
-        } else {
-            appCenterKey = keystoreProperties['appcenterKey']
-            fabricKey = keystoreProperties["fabricKey"]
-        }
-
+        def fabricKey = propertiesImporter.getFabricKey()
+        def appCenterKey = propertiesImporter.getAppCenterKey()
         manifestPlaceholders = [fabricKey:fabricKey]
         buildConfigField("String", "APPCENTER_KEY", "\"$appCenterKey\"")
     }
-    signingConfigs {
-        release {
-            storeFile rootProject.file('keystore/Keystore.jks')
-            if (System.getenv("CI") != null) {
-                storePassword System.getenv("STORE_PASSWORD")
-                keyPassword System.getenv("KEY_PASSWORD")
-                keyAlias System.getenv("KEY_ALIAS")
-            } else {
-                storePassword keystoreProperties['storePassword']
-                keyPassword keystoreProperties['keyPassword']
-                keyAlias keystoreProperties['keyAlias']
+    if (propertiesImporter.canMakeSigning()) {
+        signingConfigs {
+            release {
+                storeFile new File(propertiesImporter.getKeystoreFilePath())
+                storePassword propertiesImporter.getKeystorePassword()
+                keyPassword propertiesImporter.getKeyPassword()
+                keyAlias propertiesImporter.getKeyAlias()
+                v1SigningEnabled true
+                v2SigningEnabled true
             }
         }
     }
@@ -56,10 +40,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            ext.betaDistributionGroupAliases = 'andrew-shkrob-1'
-            def path = "release-notes/${defaultConfig.versionName}.md"
-            ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
+            if (propertiesImporter.canMakeSigning()) {
+                signingConfig signingConfigs.release
+                ext.betaDistributionGroupAliases = 'andrew-shkrob-1'
+                def path = "release-notes/${defaultConfig.versionName}.md"
+                ext.betaDistributionReleaseNotesFilePath = rootProject.file(path).getPath()
+            }
         }
     }
 }
@@ -82,124 +68,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-}
-
-task deployAppCenter() {
-    description = 'Deploying application to AppCenter'
-    group = 'publishing'
-
-    doFirst {
-        println "Deploying to AppCenter"
-    }
-
-    if (System.getenv("CIRCLECI") == null || !project.hasProperty("deploy"))
-        return
-
-    def appCenterToken = System.getenv("APP_CENTER_TOKEN")
-    def appCenterOwnerName = System.getenv("APP_CENTER_OWNER_NAME")
-    def appCenterAppName = System.getenv("APP_CENTER_APP_NAME")
-    def appCenterUrl = "https://api.appcenter.ms/v0.1/apps/${appCenterOwnerName}/${appCenterAppName}"
-    def postReleaseResponse = appCenterPostRelease("${appCenterUrl}/release_uploads", appCenterToken)
-    postReleaseResponse = new JSONObject(postReleaseResponse)
-    def appCenterUploadId = postReleaseResponse.get("upload_id")
-    def appCenterUploadUrl = postReleaseResponse.get("upload_url")
-    appCenterUploadApkFile(appCenterUploadUrl)
-    def updateUploadStatusResponse = appCenterUpdateUploadStatus("${appCenterUrl}/release_uploads/${appCenterUploadId}", appCenterToken)
-    updateUploadStatusResponse = new JSONObject(updateUploadStatusResponse)
-    def appCenterReleaseId = updateUploadStatusResponse.get("release_id")
-    def releaseNotesPath = "release-notes/${android.defaultConfig.versionName}.md"
-    String releaseInfo = getDistributionConfig(rootProject.file(releaseNotesPath).getPath())
-
-    delete rootProject.file(releaseNotesPath).getPath()
-    new File(rootProject.file(releaseNotesPath).getPath()).text = releaseInfo
-
-    def appCenterDistributeToGroupResponse =
-            appCenterDistributeToGroup(rootProject.file(releaseNotesPath).getPath(), "${appCenterUrl}/releases/${appCenterReleaseId}", appCenterToken)
-
-    doLast {
-        println appCenterDistributeToGroupResponse
-        println "Successfully deployed"
-    }
-}
-
-static final String appCenterPostRelease(String appCenterReleaseUrl, String appCenterToken) {
-    def postReleaseUploadQuery = "curl -X POST " +
-            "--header 'Content-Type: application/json' " +
-            "--header 'Accept: application/json' " +
-            "--header 'X-API-Token: ${appCenterToken}' " +
-            "'${appCenterReleaseUrl}'"
-    def postReleaseUploadResponse =
-            ['bash',
-             '-c',
-             postReleaseUploadQuery
-            ].execute()
-    postReleaseUploadResponse.waitFor()
-
-    return postReleaseUploadResponse.text
-}
-
-static final void appCenterUploadApkFile(String appCenterUploadUrl) {
-    def uploadApkFileQuery = "curl " +
-            "${appCenterUploadUrl} " +
-            "-F \"ipa=@app/build/outputs/apk/release/app-release.apk\""
-    def uploadApkFileResponse =
-            ['bash',
-             '-c',
-             uploadApkFileQuery
-            ].execute()
-    uploadApkFileResponse.waitFor()
-
-    println uploadApkFileResponse.text
-}
-
-static final String appCenterUpdateUploadStatus(String appCenterUploadUrl, String appCenterToken) {
-    def updateUploadStatusQuery = "curl -X PATCH " +
-            "'${appCenterUploadUrl}' " +
-            "-H 'X-API-Token: ${appCenterToken}' " +
-            "-H 'accept: application/json' " +
-            "-H 'Content-Type: application/json' " +
-            "-d '{ \"status\": \"committed\"}'"
-    def updateUploadStatusResponse =
-            ['bash',
-             '-c',
-             updateUploadStatusQuery
-            ].execute()
-    updateUploadStatusResponse.waitFor()
-    return updateUploadStatusResponse.text
-}
-
-static final String getDistributionConfig(String releaseNotesPath) {
-    def branch = System.getenv("CIRCLE_BRANCH")
-    def commitHash = System.getenv("CIRCLE_SHA1")
-    def commitMessage = ['bash', '-c', "git log --format=%B -n 1 ${commitHash}"]
-            .execute().text.replaceAll("\\n", "")
-    def releaseNotes = new File(releaseNotesPath).text
-    releaseNotes = "### Branch: ${branch}\n${releaseNotes}"
-    def releaseInfo = new JSONObject()
-    releaseInfo.accumulate("destination_name", "Collaborators").
-            accumulate("release_notes", releaseNotes).
-            accumulate("build",
-                    new JSONObject().
-                            accumulate("branch", branch).
-                            accumulate("commit_hash", commitHash).
-                            accumulate("commit_message", commitMessage)).
-            accumulate("notify_testers", true).
-            accumulate("mandatory_update", branch == "master")
-    return releaseInfo.toString()
-}
-
-static final String appCenterDistributeToGroup(String releaseInfoFile, String appCenterReleaseUrl, String appCenterToken) {
-    def distributeToGroupQuery = "curl -X PATCH " +
-            "--header 'Content-Type: application/json' " +
-            "--header 'Accept: application/json' " +
-            "--header 'X-API-Token: ${appCenterToken}' " +
-            "-d @${releaseInfoFile} " +
-            "'${appCenterReleaseUrl}'"
-    def distributeToGroupResponse =
-            ['bash',
-             '-c',
-             distributeToGroupQuery
-            ].execute()
-    distributeToGroupResponse.waitFor()
-    return  distributeToGroupResponse.text
 }
