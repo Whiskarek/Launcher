@@ -8,8 +8,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import by.whiskarek.yandexlauncher.allapps.AppListController
 
 class LauncherActivity : AppCompatActivity() {
+
+    private lateinit var appListController: AppListController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,7 @@ class LauncherActivity : AppCompatActivity() {
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this::onNavigationItemSelected)
+        appListController = AppListController(findViewById(R.id.app_list))
     }
 
     override fun onBackPressed() {
@@ -40,6 +44,14 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_drawer_launcher_grid -> {
+                appListController.setGridLayout()
+            }
+            R.id.nav_drawer_launcher_list -> {
+                appListController.setListLayout()
+            }
+        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
