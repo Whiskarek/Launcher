@@ -168,18 +168,27 @@ workflows:
             - "DeteKt"
             - "Unit Tests"
             - "Decode Keystore"
-      - "Deploy Fabric":
+      - "Deploy Hold":
           type: approval
           requires:
             - "Build App"
+          filters:
+            branches:
+              only:
+                - master
+                - dev
+      - "Deploy Fabric":
+          requires:
+            - "Build App"
             - "Import Fabric Properties"
+            - "Deploy Hold"
           filters:
             branches:
               only: master
       - "Deploy AppCenter":
-          type: approval
           requires:
             - "Build App"
+            - "Deploy Hold"
           filters:
             branches:
               only:
