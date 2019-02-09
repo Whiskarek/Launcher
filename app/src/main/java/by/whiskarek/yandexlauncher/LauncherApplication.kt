@@ -8,7 +8,7 @@ import com.microsoft.appcenter.crashes.Crashes
 import com.microsoft.appcenter.distribute.Distribute
 import io.fabric.sdk.android.Fabric
 
-class LauncherApplication: Application() {
+class LauncherApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Distribute.setEnabled(true)
