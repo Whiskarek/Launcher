@@ -13,4 +13,7 @@
     <dimen name="nav_header_icon_size">80dp</dimen>
 
     <dimen name="app_list_padding">4dp</dimen>
+    <dimen name="app_list_item_offset">4dp</dimen>
+
+    <dimen name="item_margin">4dp</dimen>
 </resources>
