@@ -1,8 +1,12 @@
 package by.whiskarek.yandexlauncher.activity.settings
 
 import android.os.Bundle
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
+import androidx.preference.EditTextPreference
 import by.whiskarek.yandexlauncher.R
-import androidx.preference.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

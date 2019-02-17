@@ -5,7 +5,7 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
-abstract class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
