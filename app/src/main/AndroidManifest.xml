@@ -14,8 +14,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeLight"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.profile.ProfileActivity">
-        </activity>
         <activity
                 android:name=".activity.launcher.LauncherActivity"
                 android:label="@string/title_activity_launcher">
@@ -31,7 +29,6 @@
         </activity>
         <activity
                 android:name=".activity.settings.SettingsActivity"
-                android:autoRemoveFromRecents="true"
                 android:label="@string/activity_settings"
                 android:parentActivityName=".activity.launcher.LauncherActivity">
             <intent-filter>
@@ -39,6 +36,10 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+        <activity
+                android:name=".activity.profile.ProfileActivity"
+                android:parentActivityName=".activity.launcher.LauncherActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
