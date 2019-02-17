@@ -1,4 +1,4 @@
-package by.whiskarek.yandexlauncher
+package by.whiskarek.yandexlauncher.activity.launcher
 
 import android.content.ComponentName
 import android.content.Intent
@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.whiskarek.yandexlauncher.AppInfo
+import by.whiskarek.yandexlauncher.R
 import by.whiskarek.yandexlauncher.allapps.GridItemDecoration
 import by.whiskarek.yandexlauncher.allapps.ItemGridAdapter
 import by.whiskarek.yandexlauncher.allapps.ItemListAdapter
@@ -38,8 +40,8 @@ class LauncherActivity : AppCompatActivity() {
                 this,
                 drawerLayout,
                 toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -105,6 +107,6 @@ class LauncherActivity : AppCompatActivity() {
         launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         launchIntent.component =
             ComponentName(resolveInfo.activityInfo.applicationInfo.packageName, resolveInfo.activityInfo.name)
-        return  AppInfo(icon, name, launchIntent)
+        return AppInfo(icon, name, launchIntent)
     }
 }
