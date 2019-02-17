@@ -40,6 +40,7 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/margin_small"
         android:drawableStart="@drawable/ic_github"
+        android:drawableLeft="@drawable/ic_github"
         android:drawableTint="@color/colorAccent"
         android:text="@string/github_nick"
         android:textAlignment="center"
