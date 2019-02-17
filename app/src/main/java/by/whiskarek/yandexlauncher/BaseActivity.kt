@@ -5,20 +5,20 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onResume() {
         super.onResume()
         PreferenceManager
             .getDefaultSharedPreferences(this)
-            .registerOnSharedPreferenceChangeListener(::onSharedPreferenceChanged)
+            .registerOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         PreferenceManager
             .getDefaultSharedPreferences(this)
-            .unregisterOnSharedPreferenceChangeListener(::onSharedPreferenceChanged)
+            .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun getTheme(): Resources.Theme {
@@ -32,7 +32,7 @@ abstract class BaseActivity : AppCompatActivity() {
         return theme
     }
 
-    protected open fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             "pref_theme" -> recreate()
         }
