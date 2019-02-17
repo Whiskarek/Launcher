@@ -1,9 +1,10 @@
-package by.whiskarek.yandexlauncher
+package by.whiskarek.yandexlauncher.activity
 
 import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import by.whiskarek.yandexlauncher.R
 
 abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
