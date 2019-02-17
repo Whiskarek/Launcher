@@ -16,18 +16,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings_button_text"
-            android:theme="@style/AppTheme"
-            android:autoRemoveFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".LauncherActivity"
+            android:name=".activity.launcher.LauncherActivity"
             android:label="@string/title_activity_launcher"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
