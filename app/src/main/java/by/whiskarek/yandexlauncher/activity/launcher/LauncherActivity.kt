@@ -33,7 +33,6 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launcher)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
@@ -45,22 +44,26 @@ class LauncherActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        navView.setNavigationItemSelectedListener(this::onNavigationItemSelected)
+        initRecyclers()
+    }
 
+    private fun initRecyclers() {
         val appList = getInstalledAppList()
+        val spanCount = 5
         listItems = findViewById(R.id.list_items)
         listItems.layoutManager = LinearLayoutManager(this)
         listItems.adapter = ItemListAdapter(this, appList)
         listItems.visibility = View.GONE
         gridItems = findViewById(R.id.grid_items)
-        gridItems.layoutManager = GridLayoutManager(this, 5)
+        gridItems.layoutManager = GridLayoutManager(this, spanCount)
         gridItems.adapter = ItemGridAdapter(this, appList)
         val offset = resources.getDimensionPixelOffset(R.dimen.item_margin)
         gridItems.addItemDecoration(GridItemDecoration(offset))
-        val dividerItemDecoration = DividerItemDecoration(this, (listItems.layoutManager as LinearLayoutManager).orientation)
+        val dividerItemDecoration =
+            DividerItemDecoration(this, (listItems.layoutManager as LinearLayoutManager).orientation)
         listItems.addItemDecoration(GridItemDecoration(offset))
         listItems.addItemDecoration(dividerItemDecoration)
-
-        navView.setNavigationItemSelectedListener(this::onNavigationItemSelected)
     }
 
     override fun onBackPressed() {
