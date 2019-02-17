@@ -2,14 +2,16 @@ package by.whiskarek.yandexlauncher.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.widget.ImageView
+import kotlin.math.min
 
-class SquareView @JvmOverloads constructor(
+class SquareImageView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+) : ImageView(context, attrs, defStyleAttr) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
+        val min = min(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(min, min)
     }
 }
