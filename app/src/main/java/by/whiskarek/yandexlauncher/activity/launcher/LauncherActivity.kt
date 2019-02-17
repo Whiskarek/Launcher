@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.whiskarek.yandexlauncher.AppInfo
 import by.whiskarek.yandexlauncher.activity.BaseActivity
 import by.whiskarek.yandexlauncher.R
+import by.whiskarek.yandexlauncher.activity.profile.ProfileActivity
 import by.whiskarek.yandexlauncher.activity.settings.SettingsActivity
 import by.whiskarek.yandexlauncher.allapps.GridItemDecoration
 import by.whiskarek.yandexlauncher.allapps.ItemGridAdapter
@@ -83,6 +84,9 @@ class LauncherActivity : BaseActivity() {
             R.id.nav_drawer_launcher_list -> {
                 gridItems.visibility = View.GONE
                 listItems.visibility = View.VISIBLE
+            }
+            R.id.nav_drawer_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_drawer_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
