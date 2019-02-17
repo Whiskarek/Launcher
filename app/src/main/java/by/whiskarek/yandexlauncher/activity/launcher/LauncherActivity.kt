@@ -11,14 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.whiskarek.yandexlauncher.AppInfo
-import by.whiskarek.yandexlauncher.BaseActivity
+import by.whiskarek.yandexlauncher.activity.BaseActivity
 import by.whiskarek.yandexlauncher.R
 import by.whiskarek.yandexlauncher.activity.settings.SettingsActivity
 import by.whiskarek.yandexlauncher.allapps.GridItemDecoration
