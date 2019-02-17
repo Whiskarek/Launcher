@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+            android:title="@string/pref_theme"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:defaultValue="light"
+            android:key="pref_theme"/>
+    <ListPreference
+            android:title="@string/pref_model"
+            android:entries="@array/pref_model_entries"
+            android:entryValues="@array/pref_model_values"
+            android:defaultValue="default"
+            android:key="pref_model"/>
+    <ListPreference
+            android:title="@string/pref_sort"
+            android:entries="@array/pref_sort_entries"
+            android:entryValues="@array/pref_sort_values"
+            android:defaultValue="alphabet_high"
+            android:key="pref_sort"/>
+    <SwitchPreference
+            android:title="@string/pref_show_welcome_page_on_next_load"
+            android:defaultValue="true"
+            android:key="pref_show_welcome_page_on_next_load"
+            android:summary="@string/pref_show_welcome_page_on_next_load_summary"/>
+</androidx.preference.PreferenceScreen>
