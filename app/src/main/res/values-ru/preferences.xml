@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_theme">Тема</string>
+    <string-array name="pref_theme_entries">
+        <item>Темная</item>
+        <item>Светлая</item>
+    </string-array>
+
+    <string name="pref_model">Макет</string>
+    <string-array name="pref_model_entries">
+        <item>Плотный</item>
+        <item>Стандартный</item>
+    </string-array>
+
+    <string name="pref_sort">Сортировка</string>
+    <string-array name="pref_sort_entries">
+        <item>В алфавитном порядке А-Я</item>
+        <item>В алфавитном порядке Я-А</item>
+        <item>Дата установки: по возрастанию</item>
+        <item>Дата установки: по убыванию</item>
+        <item>Количество запусков: по возрастанию</item>
+        <item>Количество запусков: по убыванию</item>
+    </string-array>
+
+    <string name="pref_show_welcome_page_on_next_load">Показать WelcomePage</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">Показать WelcomePage при следующей загрузке</string>
+</resources>

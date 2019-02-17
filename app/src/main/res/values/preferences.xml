@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_theme">Theme</string>
+    <string-array name="pref_theme_entries">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+    <string-array name="pref_theme_values">
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+
+    <string name="pref_model">Model</string>
+    <string-array name="pref_model_entries">
+        <item>Solid</item>
+        <item>Default</item>
+    </string-array>
+    <string-array name="pref_model_values">
+        <item>solid</item>
+        <item>default</item>
+    </string-array>
+
+    <string name="pref_sort">Sort</string>
+    <string-array name="pref_sort_entries">
+        <item>In alphabet order A-Z</item>
+        <item>In alphabet order Z-A</item>
+        <item>By installation date +</item>
+        <item>By installation date -</item>
+        <item>By launch amount +</item>
+        <item>By launch amount -</item>
+    </string-array>
+    <string-array name="pref_sort_values">
+        <item>alphabet_high</item>
+        <item>alphabet_low</item>
+        <item>install_date_high</item>
+        <item>install_date_low</item>
+        <item>launch_amount_high</item>
+        <item>launch_amount_low</item>
+    </string-array>
+
+    <string name="pref_show_welcome_page_on_next_load">Show WelcomePage</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">Show WelcomePage on next load</string>
+</resources>
