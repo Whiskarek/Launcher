@@ -11,7 +11,7 @@ import by.whiskarek.yandexlauncher.R
 class ItemGridAdapter(
     private val context: Context,
     private val appList: List<AppInfo>
-): RecyclerView.Adapter<ItemViewHolder>() {
+) : RecyclerView.Adapter<ItemViewHolder>() {
     override fun getItemCount(): Int = appList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

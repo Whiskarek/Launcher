@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import by.whiskarek.yandexlauncher.AppInfo
 import by.whiskarek.yandexlauncher.R
 import by.whiskarek.yandexlauncher.views.SquareImageView
-import kotlin.reflect.KProperty0
 
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val icon: SquareImageView = itemView.findViewById(R.id.item_icon)
