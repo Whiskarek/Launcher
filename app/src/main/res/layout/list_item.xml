@@ -8,11 +8,12 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
-    <by.whiskarek.yandexlauncher.views.SquareView
+    <by.whiskarek.yandexlauncher.views.SquareImageView
         android:id="@+id/item_icon"
-        android:layout_width="@dimen/circle_icon_size"
-        android:layout_height="@dimen/circle_icon_size"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         android:layout_marginEnd="@dimen/item_margin"
+        android:layout_marginRight="@dimen/item_margin"
         app:layout_constraintEnd_toStartOf="@id/item_name"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorAccent" />
@@ -20,11 +21,12 @@
     <TextView
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/circle_icon_size"
+        android:layout_height="@dimen/icon_size"
         android:layout_marginStart="@dimen/item_margin"
+        android:layout_marginLeft="@dimen/item_margin"
         android:gravity="center"
         android:lines="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintStart_toEndOf="@+id/item_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Color" />
