@@ -16,7 +16,7 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:name=".activity.launcher.LauncherActivity"
-                android:label="@string/title_activity_launcher">
+                android:label="@string/activity_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
