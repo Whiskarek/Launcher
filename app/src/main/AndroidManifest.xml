@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="by.whiskarek.yandexlauncher">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="by.whiskarek.yandexlauncher">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".LauncherApplication"
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppThemeLight"
-        tools:ignore="GoogleAppIndexingWarning">
-
+            android:name=".LauncherApplication"
+            android:allowBackup="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppThemeLight"
+            tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activity.launcher.LauncherActivity"
-            android:label="@string/title_activity_launcher">
+                android:name=".activity.launcher.LauncherActivity"
+                android:label="@string/activity_launcher">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.MONKEY"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LAUNCHER_APP" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER_APP"/>
             </intent-filter>
         </activity>
-      
         <activity
                 android:name=".activity.settings.SettingsActivity"
                 android:label="@string/activity_settings"
-                android:autoRemoveFromRecents="true"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName=".activity.launcher.LauncherActivity">
             <intent-filter>
-                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-      
+        <activity
+                android:name=".activity.profile.ProfileActivity"
+                android:label="@string/activity_profile"
+                android:parentActivityName=".activity.launcher.LauncherActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="${fabricKey}" />
+                android:name="io.fabric.ApiKey"
+                android:value="${fabricKey}"/>
     </application>
 
 </manifest>
