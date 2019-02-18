@@ -4,6 +4,7 @@ import android.os.Bundle
 import by.whiskarek.yandexlauncher.R
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NavUtils
 import by.whiskarek.yandexlauncher.activity.BaseActivity
 
 class SettingsActivity : BaseActivity() {
@@ -23,7 +24,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            NavUtils.navigateUpFromSameTask(this)
             return true
         }
         return super.onOptionsItemSelected(item)
