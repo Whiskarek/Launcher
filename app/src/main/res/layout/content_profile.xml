@@ -12,24 +12,103 @@
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                        android:layout_height="match_parent">
         <ImageView
-                android:id="@+id/ic_email"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="8dp"
-                android:tint="@color/colorAccent"
-                app:srcCompat="@drawable/ic_email"
+                style="@style/profile_image"
+                android:id="@+id/ic_fio"
+                app:srcCompat="@drawable/ic_info"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:text="andrei5709978@gmail.com"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                style="@style/profile_text"
+                android:id="@+id/text_fio"
+                android:text="@string/profile_fio"
+                app:layout_constraintStart_toEndOf="@id/ic_fio"
+                app:layout_constraintTop_toTopOf="@id/ic_fio"
+                app:layout_constraintBottom_toBottomOf="@id/ic_fio"/>
+
+        <ImageView
+                style="@style/profile_image"
+                android:id="@+id/ic_email"
+                android:onClick="launchEmail"
+                app:srcCompat="@drawable/ic_email"
+                app:layout_constraintStart_toStartOf="@id/ic_fio"
+                app:layout_constraintEnd_toEndOf="@id/ic_fio"
+                app:layout_constraintTop_toBottomOf="@id/ic_fio"/>
+        <TextView
+                style="@style/profile_text"
+                android:id="@+id/text_email"
+                android:onClick="launchEmail"
+                android:text="@string/profile_email"
                 app:layout_constraintStart_toEndOf="@id/ic_email"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ic_email"
                 app:layout_constraintBottom_toBottomOf="@id/ic_email"/>
+
+        <ImageView
+                style="@style/profile_image"
+                android:id="@+id/ic_phone"
+                android:onClick="launchPhone"
+                app:srcCompat="@drawable/ic_phone"
+                app:layout_constraintStart_toStartOf="@id/ic_email"
+                app:layout_constraintEnd_toEndOf="@id/ic_email"
+                app:layout_constraintTop_toBottomOf="@id/ic_email"/>
+        <TextView
+                style="@style/profile_text"
+                android:id="@+id/text_phone"
+                android:onClick="launchPhone"
+                android:text="@string/profile_phone"
+                app:layout_constraintStart_toEndOf="@id/ic_phone"
+                app:layout_constraintTop_toTopOf="@id/ic_phone"
+                app:layout_constraintBottom_toBottomOf="@id/ic_phone"/>
+
+        <ImageView
+                style="@style/profile_image"
+                android:id="@+id/ic_vk"
+                android:onClick="launchVk"
+                app:srcCompat="@drawable/ic_vk"
+                app:layout_constraintStart_toStartOf="@id/ic_phone"
+                app:layout_constraintEnd_toEndOf="@id/ic_phone"
+                app:layout_constraintTop_toBottomOf="@id/ic_phone"/>
+        <TextView
+                style="@style/profile_text"
+                android:id="@+id/text_vk"
+                android:onClick="launchVk"
+                android:text="@string/profile_vk"
+                app:layout_constraintStart_toEndOf="@id/ic_vk"
+                app:layout_constraintTop_toTopOf="@id/ic_vk"
+                app:layout_constraintBottom_toBottomOf="@id/ic_vk"/>
+
+        <ImageView
+                style="@style/profile_image"
+                android:id="@+id/ic_github"
+                android:onClick="launchGitHub"
+                app:srcCompat="@drawable/ic_github"
+                app:layout_constraintStart_toStartOf="@id/ic_vk"
+                app:layout_constraintEnd_toEndOf="@id/ic_vk"
+                app:layout_constraintTop_toBottomOf="@id/ic_vk"/>
+        <TextView
+                style="@style/profile_text"
+                android:id="@+id/text_github"
+                android:onClick="launchGitHub"
+                android:text="@string/profile_github"
+                app:layout_constraintStart_toEndOf="@id/ic_github"
+                app:layout_constraintTop_toTopOf="@id/ic_github"
+                app:layout_constraintBottom_toBottomOf="@id/ic_github"/>
+
+        <ImageView
+                style="@style/profile_image"
+                android:id="@+id/ic_linkedin"
+                android:onClick="launchLinkedin"
+                app:srcCompat="@drawable/ic_linkedin"
+                app:layout_constraintStart_toStartOf="@id/ic_github"
+                app:layout_constraintEnd_toEndOf="@id/ic_github"
+                app:layout_constraintTop_toBottomOf="@id/ic_github"/>
+        <TextView
+                style="@style/profile_text"
+                android:id="@+id/text_linkedin"
+                android:onClick="launchLinkedin"
+                android:text="@string/profile_linkedin"
+                app:layout_constraintStart_toEndOf="@id/ic_linkedin"
+                app:layout_constraintTop_toTopOf="@id/ic_linkedin"
+                app:layout_constraintBottom_toBottomOf="@id/ic_linkedin"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
