@@ -39,6 +39,7 @@
         </activity>
         <activity
                 android:name=".activity.profile.ProfileActivity"
+                android:label="@string/activity_profile"
                 android:parentActivityName=".activity.launcher.LauncherActivity">
         </activity>
         <activity android:name=".MainActivity">
