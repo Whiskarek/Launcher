@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
@@ -47,6 +48,9 @@ class LauncherActivity : BaseActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this::onNavigationItemSelected)
+        navView.getHeaderView(0).findViewById<LinearLayout>(R.id.header).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
         initRecyclers()
     }
 
@@ -84,9 +88,6 @@ class LauncherActivity : BaseActivity() {
             R.id.nav_drawer_launcher_list -> {
                 gridItems.visibility = View.GONE
                 listItems.visibility = View.VISIBLE
-            }
-            R.id.nav_drawer_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_drawer_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
