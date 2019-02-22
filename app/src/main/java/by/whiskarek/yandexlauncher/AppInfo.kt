@@ -8,7 +8,8 @@ data class AppInfo(
     val name: String,
     val system: Boolean,
     val launchIntent: Intent,
-    val launchInfoIntent: Intent,
+    val infoIntent: Intent,
+    val deleteIntent: Intent,
     val installTime: Long,
-    val launchAmount: Int
+    var launchAmount: Int
 )
