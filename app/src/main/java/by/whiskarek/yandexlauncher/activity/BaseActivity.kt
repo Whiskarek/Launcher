@@ -10,7 +10,7 @@ import java.lang.IllegalArgumentException
 abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val childClassName = this.javaClass.asSubclass(this.javaClass).simpleName
-    protected var showWelcomePage
+    var showWelcomePage
         get() = BaseActivity.showWelcomePage
         private set(value) {
             BaseActivity.showWelcomePage = value
@@ -19,6 +19,11 @@ abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPre
         get() = BaseActivity.currentTheme
         private set(value) {
             BaseActivity.currentTheme = value
+        }
+    var currentModel
+        get() = BaseActivity.currentModel
+        private set(value) {
+            BaseActivity.currentModel = value
         }
 
     override fun onResume() {

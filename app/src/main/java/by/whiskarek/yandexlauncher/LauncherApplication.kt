@@ -9,6 +9,7 @@ import com.microsoft.appcenter.distribute.Distribute
 import io.fabric.sdk.android.Fabric
 
 class LauncherApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         Distribute.setEnabled(true)
@@ -21,5 +22,10 @@ class LauncherApplication : Application() {
                 Distribute::class.java
         )
         Fabric.with(this, Crashlytics())
+    }
+
+    companion object {
+        var itemList: List<AppInfo> = listOf()
+        var nextLoad: Boolean = true
     }
 }

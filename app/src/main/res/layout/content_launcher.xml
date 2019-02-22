@@ -9,18 +9,9 @@
         tools:context=".activity.launcher.LauncherActivity"
         tools:showIn="@layout/app_bar_launcher">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_items"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/app_list_padding"
-        android:clipToPadding="false"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/grid_items"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/app_list_padding"
-        android:clipToPadding="false"/>
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
