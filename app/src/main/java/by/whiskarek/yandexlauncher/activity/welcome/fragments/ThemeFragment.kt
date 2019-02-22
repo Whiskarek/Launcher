@@ -20,8 +20,10 @@ class ThemeFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_welcome_page_theme_fragment, container, false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         when ((activity as BaseActivity).currentTheme) {
-            PreferenceConstants.THEME_LIGHT_ID -> view.findViewById<AppCompatRadioButton>(R.id.rb_light).isChecked = true
-            PreferenceConstants.THEME_DARK_ID -> view.findViewById<AppCompatRadioButton>(R.id.rb_dark).isChecked = true
+            PreferenceConstants.THEME_LIGHT_ID ->
+                view.findViewById<AppCompatRadioButton>(R.id.rb_light).isChecked = true
+            PreferenceConstants.THEME_DARK_ID ->
+                view.findViewById<AppCompatRadioButton>(R.id.rb_dark).isChecked = true
         }
         radioGroup = view.findViewById(R.id.rb_theme)
         radioGroup.setOnCheckedChangeListener {

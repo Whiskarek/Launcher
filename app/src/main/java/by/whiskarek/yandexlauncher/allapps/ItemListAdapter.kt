@@ -25,6 +25,8 @@ class ItemListAdapter(
             appList[position].launchAmount++
             context.startActivity(appList[position].launchIntent)
         })
-        holder.itemView.setOnCreateContextMenuListener(ContextMenuListener(appList[position], context.applicationContext))
+        holder
+            .itemView
+            .setOnCreateContextMenuListener(ContextMenuListener(appList[position], context.applicationContext))
     }
 }

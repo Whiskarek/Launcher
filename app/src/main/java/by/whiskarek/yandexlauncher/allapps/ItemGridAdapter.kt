@@ -1,7 +1,9 @@
 package by.whiskarek.yandexlauncher.allapps
 
 import android.content.Context
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.whiskarek.yandexlauncher.AppInfo
 import by.whiskarek.yandexlauncher.R
@@ -23,6 +25,8 @@ class ItemGridAdapter(
             appList[position].launchAmount++
             context.startActivity(appList[position].launchIntent)
         })
-        holder.itemView.setOnCreateContextMenuListener(ContextMenuListener(appList[position], context.applicationContext))
+        holder
+            .itemView
+            .setOnCreateContextMenuListener(ContextMenuListener(appList[position], context.applicationContext))
     }
 }
