@@ -23,7 +23,7 @@ class GridRecyclerViewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_launcher_recycler_view_fragment, container, false)
-        val spanCount = when((activity as BaseActivity).currentModel) {
+        val spanCount = when ((activity as BaseActivity).currentModel) {
             PreferenceConstants.MODEL_DEFAULT -> resources.getInteger(R.integer.model_default)
             PreferenceConstants.MODEL_SOLID -> resources.getInteger(R.integer.model_solid)
             else -> throw IllegalArgumentException()
