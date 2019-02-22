@@ -128,14 +128,19 @@ class LauncherActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         launchIntent.component =
             ComponentName(resolveInfo.activityInfo.applicationInfo.packageName, resolveInfo.activityInfo.name)
-        val infoIntent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
+        val infoIntent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         infoIntent.data = Uri.parse("package:${resolveInfo.activityInfo.packageName}")
+        infoIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val deleteIntent = Intent(Intent.ACTION_UNINSTALL_PACKAGE)
+        deleteIntent.data = Uri.parse("package:${resolveInfo.activityInfo.packageName}")
+        deleteIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         return AppInfo(
             icon,
             name,
             isSystemApp(resolveInfo.activityInfo.packageName),
             launchIntent,
             infoIntent,
+            deleteIntent,
             packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).firstInstallTime,
             0
         )
