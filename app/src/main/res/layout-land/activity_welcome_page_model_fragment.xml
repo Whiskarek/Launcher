@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RadioGroup
+            android:id="@+id/rb_model"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/offset"
+            android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatRadioButton
+                style="@style/activity_welcome_page_radio_button"
+                android:id="@+id/rb_default"
+                android:text="@string/activity_welcome_page_model_default" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+                style="@style/activity_welcome_page_radio_button"
+                android:id="@+id/rb_solid"
+                android:text="@string/activity_welcome_page_model_solid" />
+    </RadioGroup>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+        <TextView
+                android:id="@+id/tv_desc_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="@string/activity_welcome_page_model_default_description"/>
+
+        <TextView
+                android:id="@+id/tv_desc_solid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="@string/activity_welcome_page_model_solid_description"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,9 @@
             android:theme="@style/AppThemeLight"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
+                android:name=".activity.welcome.WelcomePageActivity"
+                android:parentActivityName=".activity.launcher.LauncherActivity"/>
+        <activity
                 android:name=".activity.launcher.LauncherActivity"
                 android:label="@string/activity_launcher">
             <intent-filter>

@@ -15,7 +15,6 @@ class SettingsActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings_container, SettingsFragment())
@@ -28,5 +27,9 @@ class SettingsActivity : BaseActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this)
     }
 }
