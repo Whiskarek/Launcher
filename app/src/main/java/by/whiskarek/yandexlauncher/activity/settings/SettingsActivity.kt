@@ -29,4 +29,8 @@ class SettingsActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this)
+    }
 }
