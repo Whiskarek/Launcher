@@ -15,7 +15,6 @@ class SettingsActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings_container, SettingsFragment())
