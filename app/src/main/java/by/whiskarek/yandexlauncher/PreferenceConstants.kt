@@ -17,6 +17,12 @@ class PreferenceConstants {
         const val MODEL_DEFAULT = "default"
         const val MODEL_SOLID = "solid"
 
-        const val SORT_DEFAULT = "alphabet_high"
+        const val SORT_ALPHABET_HIGH = "alphabet_high"
+        const val SORT_ALPHABET_LOW = "alphabet_low"
+        const val SORT_INSTALL_DATE_HIGH = "install_date_high"
+        const val SORT_INSTALL_DATE_LOW = "install_date_low"
+        const val SORT_LAUNCH_AMOUNT_HIGH = "launch_amount_high"
+        const val SORT_LAUNCH_AMOUNT_LOW = "launch_amount_low"
+        const val SORT_DEFAULT = SORT_ALPHABET_HIGH
     }
 }
