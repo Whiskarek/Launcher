@@ -1,5 +1,7 @@
 package by.whiskarek.yandexlauncher.activity.welcome
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
@@ -18,8 +20,10 @@ class WelcomePageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = Color.argb(66, 0, 0, 0)
+        }
         setContentView(R.layout.activity_welcome_page)
-
         viewPager = findViewById(R.id.view_pager)
         adapter = SimpleFragmentAdapter(supportFragmentManager)
         viewPager.adapter = adapter
