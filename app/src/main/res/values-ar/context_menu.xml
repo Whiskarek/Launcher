@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="context_menu_app_info">معلومات</string>
+    <string name="context_menu_launches">عدد البدايات:</string>
+    <string name="context_menu_app_delete">احذف</string>
+</resources>

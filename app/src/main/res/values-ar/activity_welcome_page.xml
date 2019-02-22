@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity_welcome_page_welcome">مرحبا</string>
+    <string name="activity_welcome_page_features">قاذفة رائعة جدا</string>
+    <string name="activity_welcome_page_theme_light">سمة الضوء</string>
+    <string name="activity_welcome_page_theme_dark">سمة مظلمة</string>
+    <string name="activity_welcome_page_model_default">التصميم المعتاد</string>
+    <string name="activity_welcome_page_model_default_description">في وضع عمودي: 4 الرموز في صف واحد\nفي وضع أفقي: 6 الرموز في صف واحد</string>
+    <string name="activity_welcome_page_model_solid">تخطيط كثيف</string>
+    <string name="activity_welcome_page_model_solid_description">في وضع عمودي: 5 الرموز في صف واحد\nفي وضع أفقي: 7 الرموز في صف واحد</string>
+</resources>

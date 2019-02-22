@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">مركبة الإطلاق المنزلية v2</string>
+    <string name="github_nick">Whiskarek</string>
+    <string name="developer_name">Andrew Shkrob</string>
+    <string name="activity_launcher">قاذفة</string>
+    <string name="activity_settings">إعدادات</string>
+    <string name="activity_profile">التوصيف</string>
+</resources>
