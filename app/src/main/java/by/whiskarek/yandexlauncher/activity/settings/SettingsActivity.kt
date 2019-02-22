@@ -5,6 +5,7 @@ import by.whiskarek.yandexlauncher.R
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NavUtils
+import by.whiskarek.yandexlauncher.LauncherApplication
 import by.whiskarek.yandexlauncher.activity.BaseActivity
 
 class SettingsActivity : BaseActivity() {
@@ -31,5 +32,10 @@ class SettingsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         NavUtils.navigateUpFromSameTask(this)
+    }
+
+    override fun onShowWelcomePageChanged(showWelcomePage: Boolean) {
+        super.onShowWelcomePageChanged(showWelcomePage)
+        LauncherApplication.nextLoad = false
     }
 }
