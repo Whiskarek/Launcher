@@ -25,6 +25,11 @@ abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPre
         private set(value) {
             BaseActivity.currentModel = value
         }
+    var currentSort
+        get() = BaseActivity.currentSort
+        private set(value) {
+            BaseActivity.currentSort = value
+        }
 
     override fun onResume() {
         super.onResume()
