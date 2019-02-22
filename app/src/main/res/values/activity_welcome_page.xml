@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity_welcome_page_welcome">Welcome</string>
+    <string name="activity_welcome_page_features">Very good launcher\nI tried</string>
+    <string name="activity_welcome_page_theme_light">Light Theme</string>
+    <string name="activity_welcome_page_theme_dark">Dark Theme</string>
+    <string name="activity_welcome_page_model_default">Default Model</string>
+    <string name="activity_welcome_page_model_default_description">In portrait mode: 4 icons in a row\nIn landscape mode: 6 icons in a row</string>
+    <string name="activity_welcome_page_model_solid">Solid model</string>
+    <string name="activity_welcome_page_model_solid_description">In portrait mode: 5 icons in a row\nIn landscape mode: 7 icons in a row</string>
+
+    <style name="activity_welcome_page_radio_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/min_offset</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/radio_button_background</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+    </style>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RadioGroup
+            android:id="@+id/rb_theme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
+
+        <RadioButton
+                style="@style/activity_welcome_page_radio_button"
+                android:id="@+id/rb_light"
+                android:text="@string/activity_welcome_page_theme_light" />
+
+        <RadioButton
+                style="@style/activity_welcome_page_radio_button"
+                android:id="@+id/rb_dark"
+                android:text="@string/activity_welcome_page_theme_dark" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

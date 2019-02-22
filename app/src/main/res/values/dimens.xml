@@ -6,13 +6,15 @@
     <dimen name="nav_header_height">176dp</dimen>
 
     <dimen name="civ_size">200dp</dimen>
-    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_small">@dimen/offset</dimen>
 
     <dimen name="icon_size">56dp</dimen>
     <dimen name="nav_header_icon_size">80dp</dimen>
 
-    <dimen name="app_list_padding">4dp</dimen>
-    <dimen name="app_list_item_offset">4dp</dimen>
+    <dimen name="app_list_padding">@dimen/min_offset</dimen>
 
     <dimen name="item_margin">4dp</dimen>
+
+    <dimen name="min_offset">4dp</dimen>
+    <dimen name="offset">4dp</dimen>
 </resources>

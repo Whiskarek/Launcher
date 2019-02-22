@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="profile_fio">Andrew Shkrob</string>
+    <string name="profile_email">andrei5709978@gmail.com</string>
+    <string name="profile_phone">+375 29 570–99–78</string>
+    <string name="profile_vk">andrew_shkrob</string>
+    <string name="profile_github">Whiskarek</string>
+    <string name="profile_linkedin">andrew-shkrob-b83b58160</string>
+
+    <style name="profile_image">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
+
+    <style name="profile_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+    </style>
+</resources>
