@@ -8,36 +8,51 @@ import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
-import android.view.View
 import android.widget.LinearLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import by.whiskarek.yandexlauncher.AppInfo
+import by.whiskarek.yandexlauncher.LauncherApplication
 import by.whiskarek.yandexlauncher.activity.BaseActivity
 import by.whiskarek.yandexlauncher.R
 import by.whiskarek.yandexlauncher.activity.profile.ProfileActivity
 import by.whiskarek.yandexlauncher.activity.settings.SettingsActivity
-import by.whiskarek.yandexlauncher.allapps.GridItemDecoration
-import by.whiskarek.yandexlauncher.allapps.ItemGridAdapter
-import by.whiskarek.yandexlauncher.allapps.ItemListAdapter
+import by.whiskarek.yandexlauncher.activity.welcome.WelcomePageActivity
 
-class LauncherActivity : BaseActivity() {
+class LauncherActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
-    private lateinit var listItems: RecyclerView
-    private lateinit var gridItems: RecyclerView
+    private lateinit var navView: NavigationView
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        onPageSelected(position)
+    }
+
+    override fun onPageSelected(position: Int) {
+        when (position) {
+            0 -> navView.setCheckedItem(R.id.nav_drawer_launcher_grid)
+            1 -> navView.setCheckedItem(R.id.nav_drawer_launcher_list)
+        }
+    }
+
+    private lateinit var viewPager: ViewPager
+    private lateinit var viewPagerAdapter: SimpleFragmentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if ((this as BaseActivity).showWelcomePage and LauncherApplication.nextLoad) {
+            startActivity(Intent(this, WelcomePageActivity::class.java))
+            LauncherApplication.nextLoad = false
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -51,25 +66,16 @@ class LauncherActivity : BaseActivity() {
         navView.getHeaderView(0).findViewById<LinearLayout>(R.id.header).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
-        initRecyclers()
-    }
+        navView.setCheckedItem(R.id.nav_drawer_launcher_grid)
 
-    private fun initRecyclers() {
-        val appList = getInstalledAppList()
-        val spanCount = 5
-        listItems = findViewById(R.id.list_items)
-        listItems.layoutManager = LinearLayoutManager(this)
-        listItems.adapter = ItemListAdapter(this, appList)
-        listItems.visibility = View.GONE
-        gridItems = findViewById(R.id.grid_items)
-        gridItems.layoutManager = GridLayoutManager(this, spanCount)
-        gridItems.adapter = ItemGridAdapter(this, appList)
-        val offset = resources.getDimensionPixelOffset(R.dimen.item_margin)
-        gridItems.addItemDecoration(GridItemDecoration(offset))
-        val dividerItemDecoration =
-            DividerItemDecoration(this, (listItems.layoutManager as LinearLayoutManager).orientation)
-        listItems.addItemDecoration(GridItemDecoration(offset))
-        listItems.addItemDecoration(dividerItemDecoration)
+        if (LauncherApplication.itemList.isEmpty()) {
+            LauncherApplication.itemList = getInstalledAppList()
+        }
+
+        viewPager = findViewById(R.id.vp_items)
+        viewPagerAdapter = SimpleFragmentAdapter(supportFragmentManager)
+        viewPager.addOnPageChangeListener(this)
+        viewPager.adapter = viewPagerAdapter
     }
 
     override fun onBackPressed() {
@@ -82,12 +88,10 @@ class LauncherActivity : BaseActivity() {
     private fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_drawer_launcher_grid -> {
-                listItems.visibility = View.GONE
-                gridItems.visibility = View.VISIBLE
+                viewPager.currentItem = 0
             }
             R.id.nav_drawer_launcher_list -> {
-                gridItems.visibility = View.GONE
-                listItems.visibility = View.VISIBLE
+                viewPager.currentItem = 1
             }
             R.id.nav_drawer_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
