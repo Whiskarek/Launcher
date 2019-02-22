@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="context_menu_app_info">Info</string>
+    <string name="context_menu_launches">Launches: </string>
+    <string name="context_menu_app_delete">Delete</string>
+</resources>

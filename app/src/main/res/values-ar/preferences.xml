@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_theme">تيما</string>
+    <string-array name="pref_theme_entries">
+        <item>ظلام</item>
+        <item>الضوء</item>
+    </string-array>
+
+    <string name="pref_model">التصميم</string>
+    <string-array name="pref_model_entries">
+        <item>كثيف</item>
+        <item>قياسي</item>
+    </string-array>
+
+    <string name="pref_sort">Сортировка</string>
+    <string-array name="pref_sort_entries">
+        <item>أبجديا ، a-z</item>
+        <item>بالترتيب الأبجدي i-a</item>
+        <item>التثبيت التاريخ تصاعدي</item>
+        <item>التثبيت التاريخ تنازلي</item>
+        <item>عدد عمليات الإطلاق: تصاعدي</item>
+        <item>عدد عمليات الإطلاق: تصاعدي</item>
+    </string-array>
+
+    <string name="pref_show_welcome_page_on_next_load">أظهر صفحة الترحيب</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">اعرض قفزة على التمهيد القادم</string>
+</resources>

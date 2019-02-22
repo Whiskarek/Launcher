@@ -13,7 +13,7 @@ import by.whiskarek.yandexlauncher.R
 import by.whiskarek.yandexlauncher.allapps.GridItemDecoration
 import by.whiskarek.yandexlauncher.allapps.ItemListAdapter
 
-class ListRecyclerViewFragment() : Fragment() {
+class ListRecyclerViewFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: ItemListAdapter

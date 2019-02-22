@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation Drawer Menu -->
+    <string name="navigation_drawer_open">فتح درج الملاحة</string>
+    <string name="navigation_drawer_close">أغلق درج الملاحة</string>
+    <string name="nav_header_desc">ترويسة</string>
+    <string name="nav_drawer_launcher_grid">الشبكة</string>
+    <string name="nav_drawer_launcher_list">قائمة</string>
+    <string name="nav_drawer_title_options">خيارات</string>
+    <string name="nav_drawer_settings">إعدادات</string>
+    <string name="nav_drawer_profile">التوصيف</string>
+</resources>

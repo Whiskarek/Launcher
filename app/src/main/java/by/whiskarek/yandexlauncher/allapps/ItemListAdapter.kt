@@ -22,7 +22,11 @@ class ItemListAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(appList[position])
         holder.setOnClickListener(View.OnClickListener {
+            appList[position].launchAmount++
             context.startActivity(appList[position].launchIntent)
         })
+        holder
+            .itemView
+            .setOnCreateContextMenuListener(ContextMenuListener(appList[position], context.applicationContext))
     }
 }

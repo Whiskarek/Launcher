@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appcenter_distribute_update_dialog_download">نزل</string>
+    <string name="appcenter_distribute_update_dialog_postpone">ذكرني لاحقا</string>
+</resources>
