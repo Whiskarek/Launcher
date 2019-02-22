@@ -2,9 +2,12 @@ package by.whiskarek.yandexlauncher.activity.launcher
 
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -14,6 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import by.whiskarek.yandexlauncher.AppInfo
+import by.whiskarek.yandexlauncher.ArraySorter
 import by.whiskarek.yandexlauncher.LauncherApplication
 import by.whiskarek.yandexlauncher.activity.BaseActivity
 import by.whiskarek.yandexlauncher.R
@@ -71,7 +75,8 @@ class LauncherActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         if (LauncherApplication.itemList.isEmpty()) {
             LauncherApplication.itemList = getInstalledAppList()
         }
-
+        LauncherApplication.itemList =
+            ArraySorter(LauncherApplication.itemList, (this as BaseActivity).currentSort).getSortedArray()
         viewPager = findViewById(R.id.vp_items)
         viewPagerAdapter = SimpleFragmentAdapter(supportFragmentManager)
         viewPager.addOnPageChangeListener(this)
@@ -123,6 +128,22 @@ class LauncherActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         launchIntent.component =
             ComponentName(resolveInfo.activityInfo.applicationInfo.packageName, resolveInfo.activityInfo.name)
-        return AppInfo(icon, name, launchIntent)
+        val infoIntent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
+        infoIntent.data = Uri.parse("package:${resolveInfo.activityInfo.packageName}")
+        return AppInfo(
+            icon,
+            name,
+            isSystemApp(resolveInfo.activityInfo.packageName),
+            launchIntent,
+            infoIntent,
+            packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).firstInstallTime,
+            0
+        )
+    }
+
+    private fun isSystemApp(packageName: String): Boolean {
+        val appInfo = packageManager.getApplicationInfo(packageName, 0)
+        val mask = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP
+        return (appInfo.flags and mask) != 0
     }
 }
