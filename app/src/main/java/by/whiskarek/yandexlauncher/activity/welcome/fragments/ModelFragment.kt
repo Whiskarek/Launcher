@@ -17,16 +17,24 @@ class ModelFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val initModel = sharedPreferences.getString(PreferenceConstants.KEY_MODEL, PreferenceConstants.MODEL_DEFAULT)
         when (initModel) {
-            PreferenceConstants.MODEL_DEFAULT -> view.findViewById<AppCompatRadioButton>(R.id.rb_default).isChecked = true
-            PreferenceConstants.MODEL_SOLID -> view.findViewById<AppCompatRadioButton>(R.id.rb_solid).isChecked = true
+            PreferenceConstants.MODEL_DEFAULT ->
+                view.findViewById<AppCompatRadioButton>(R.id.rb_default).isChecked = true
+            PreferenceConstants.MODEL_SOLID ->
+                view.findViewById<AppCompatRadioButton>(R.id.rb_solid).isChecked = true
         }
         view.findViewById<RadioGroup>(R.id.rb_model).setOnCheckedChangeListener {
                 _, checkedId ->
             when (checkedId) {
                 R.id.rb_default ->
-                    sharedPreferences.edit().putString(PreferenceConstants.KEY_MODEL, PreferenceConstants.MODEL_DEFAULT).apply()
+                    sharedPreferences
+                        .edit()
+                        .putString(PreferenceConstants.KEY_MODEL, PreferenceConstants.MODEL_DEFAULT)
+                        .apply()
                 R.id.rb_solid ->
-                    sharedPreferences.edit().putString(PreferenceConstants.KEY_MODEL, PreferenceConstants.MODEL_SOLID).apply()
+                    sharedPreferences
+                        .edit()
+                        .putString(PreferenceConstants.KEY_MODEL, PreferenceConstants.MODEL_SOLID)
+                        .apply()
             }
         }
         return view
