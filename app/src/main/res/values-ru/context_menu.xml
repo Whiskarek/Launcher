@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="context_menu_app_info">Информация</string>
+    <string name="context_menu_launches">Количество запусков: </string>
+    <string name="context_menu_app_delete">Удалить</string>
+</resources>
