@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import by.whiskarek.yandexlauncher.Constants
+import by.whiskarek.yandexlauncher.PreferenceConstants
 import java.lang.IllegalArgumentException
 
 abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -55,10 +55,10 @@ abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPre
         if (sharedPreferences == null)
             return
         when (key) {
-            Constants.KEY_THEME -> changeTheme(sharedPreferences, key)
-            Constants.KEY_MODEL -> changeModel(sharedPreferences, key)
-            Constants.KEY_SORT -> changeSort(sharedPreferences, key)
-            Constants.KEY_SHOW_WELCOME_PAGE_ON_NEXT_LOAD -> changeShowWelcomePage(sharedPreferences, key)
+            PreferenceConstants.KEY_THEME -> changeTheme(sharedPreferences, key)
+            PreferenceConstants.KEY_MODEL -> changeModel(sharedPreferences, key)
+            PreferenceConstants.KEY_SORT -> changeSort(sharedPreferences, key)
+            PreferenceConstants.KEY_SHOW_WELCOME_PAGE_ON_NEXT_LOAD -> changeShowWelcomePage(sharedPreferences, key)
         }
     }
 
@@ -100,33 +100,33 @@ abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPre
     }
 
     private fun getTheme(themeType: String): Int = when (themeType) {
-        Constants.THEME_LIGHT -> Constants.THEME_LIGHT_ID
-        Constants.THEME_DARK -> Constants.THEME_DARK_ID
+        PreferenceConstants.THEME_LIGHT -> PreferenceConstants.THEME_LIGHT_ID
+        PreferenceConstants.THEME_DARK -> PreferenceConstants.THEME_DARK_ID
         else -> throw IllegalArgumentException("$childClassName.getTheme(). Unknown theme type")
     }
 
     private fun loadThemeFromSharedPreferences(sharedPreferences: SharedPreferences, key: String): Int {
-        val newThemeType = sharedPreferences.getString(key, Constants.THEME_LIGHT)!!
+        val newThemeType = sharedPreferences.getString(key, PreferenceConstants.THEME_LIGHT)!!
         return getTheme(newThemeType)
     }
 
     private fun loadModelFromSharedPreferences(sharedPreferences: SharedPreferences, key: String): String =
-        sharedPreferences.getString(key, Constants.MODEL_DEFAULT)!!
+        sharedPreferences.getString(key, PreferenceConstants.MODEL_DEFAULT)!!
 
     private fun loadSortFromSharedPreferences(sharedPreferences: SharedPreferences, key: String): String =
-        sharedPreferences.getString(key, Constants.SORT_DEFAULT)!!
+        sharedPreferences.getString(key, PreferenceConstants.SORT_DEFAULT)!!
 
     private fun loadShowWelcomePageFromSharedPreferences(sharedPreferences: SharedPreferences, key: String): Boolean =
         sharedPreferences.getBoolean(key, true)
 
     private fun loadSettingsFromSharedPreferences() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        currentTheme = loadThemeFromSharedPreferences(sharedPreferences, Constants.KEY_THEME)
-        currentModel = loadModelFromSharedPreferences(sharedPreferences, Constants.KEY_MODEL)
-        currentSort = loadSortFromSharedPreferences(sharedPreferences, Constants.KEY_SORT)
+        currentTheme = loadThemeFromSharedPreferences(sharedPreferences, PreferenceConstants.KEY_THEME)
+        currentModel = loadModelFromSharedPreferences(sharedPreferences, PreferenceConstants.KEY_MODEL)
+        currentSort = loadSortFromSharedPreferences(sharedPreferences, PreferenceConstants.KEY_SORT)
         showWelcomePage = loadShowWelcomePageFromSharedPreferences(
             sharedPreferences,
-            Constants.KEY_SHOW_WELCOME_PAGE_ON_NEXT_LOAD
+            PreferenceConstants.KEY_SHOW_WELCOME_PAGE_ON_NEXT_LOAD
         )
     }
 
@@ -134,9 +134,9 @@ abstract class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPre
         private const val TAG = "BaseActivity"
 
         private var loadedFromSharedPreferences: Boolean = false
-        private var currentTheme: Int = Constants.THEME_DEFAULT_ID
-        private var currentModel: String = Constants.MODEL_DEFAULT
-        private var currentSort: String = Constants.SORT_DEFAULT
+        private var currentTheme: Int = PreferenceConstants.THEME_DEFAULT_ID
+        private var currentModel: String = PreferenceConstants.MODEL_DEFAULT
+        private var currentSort: String = PreferenceConstants.SORT_DEFAULT
         private var showWelcomePage: Boolean = true
     }
 }
