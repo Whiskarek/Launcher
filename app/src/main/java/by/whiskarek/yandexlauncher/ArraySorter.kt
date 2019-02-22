@@ -29,5 +29,4 @@ class ArraySorter(
         fun launchAmountHigh(app1: AppInfo?, app2: AppInfo?): Int = app1!!.launchAmount.compareTo(app2!!.launchAmount)
         fun launchAmountLow(app1: AppInfo?, app2: AppInfo?): Int = -launchAmountHigh(app1, app2)
     }
-
 }
