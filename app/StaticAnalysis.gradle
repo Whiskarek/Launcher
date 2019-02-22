@@ -1,0 +1,47 @@
+configurations {
+    ktlint
+}
+
+dependencies {
+    // ktlint
+    ktlint "com.github.shyiko:ktlint:0.15.0"
+}
+
+android {
+    lintOptions{
+        disable 'MissingTranslation'
+    }
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "src/**/*.kt"
+    args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/reports/ktlint.xml"
+}
+
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "-F", "src/**/*.kt"
+}
+
+detekt {
+    toolVersion = "1.0.0-RC12"
+    input = files("src/main/java")
+    filters = ".*/resources/.*,.*/build/.*"
+    reports {
+        xml {
+            enabled = true
+            destination = file("${buildDir}/reports/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("${buildDir}/reports/detekt.html")
+        }
+    }
+}

@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">@string/developer_name</string>
+    <string name="app_name">Home Launcher v2</string>
     <string name="github_nick">Whiskarek</string>
     <string name="developer_name">Андрей Шкроб</string>
+    <string name="activity_launcher">Лаунчер</string>
+    <string name="activity_settings">Настройки</string>
+    <string name="activity_profile">Профиль</string>
 </resources>

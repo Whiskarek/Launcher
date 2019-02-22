@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation Drawer Menu -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_drawer_launcher_grid">Grid</string>
+    <string name="nav_drawer_launcher_list">List</string>
+    <string name="nav_drawer_title_options">Options</string>
+    <string name="nav_drawer_settings">Settings</string>
+    <string name="nav_drawer_profile">Profile</string>
+</resources>

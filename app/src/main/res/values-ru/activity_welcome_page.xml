@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity_welcome_page_welcome">Привет</string>
+    <string name="activity_welcome_page_features">Очень классный лаунчер\nЯ старался</string>
+    <string name="activity_welcome_page_theme_light">Светлая тема</string>
+    <string name="activity_welcome_page_theme_dark">Темная тема</string>
+    <string name="activity_welcome_page_model_default">Обычный макет</string>
+    <string name="activity_welcome_page_model_default_description">В портретном режиме: 4 иконки в ряд\nВ ландшафтном режиме: 6 иконок в ряд</string>
+    <string name="activity_welcome_page_model_solid">Плотный макет</string>
+    <string name="activity_welcome_page_model_solid_description">В портретном режиме: 5 иконок в ряд\nВ ландшафтном режиме: 7 иконок в ряд</string>
+</resources>
